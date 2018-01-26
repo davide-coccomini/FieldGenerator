@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Field Generator</title>
+<!--<link rel="stylesheet" type="text/css" href="css/stile.css">-->
+<link rel="icon" href="img/icon.png" type="image/png" />
+<meta charset="utf-8" />
+<style>
+
+@media screen and (max-width: 1100px){
+    body {
+        background:url(img/re.jpg);
+    }
+}
+#wrapper
+{
+	width:1250px;
+    margin:auto;
+}
+#footer
+{
+	width:100%;
+	margin:2% auto;
+	text-align:center;
+}
+input[type=number]{
+  outline: none;
+  padding: 2px;
+  border: 1px solid #4d0000;
+  background:url(img/bgsangue.gif);
+  background-size:100% 100%;
+  -webkit-transition: all 0.40s ease-in-out;
+  -moz-transition: all 0.40s ease-in-out;
+  -ms-transition: all 0.40s ease-in-out;
+  -o-transition: all 0.40s ease-in-out;
+  color:white;
+  border-radius:10%;
+  -webkit-filter: brightness(160%);
+}
+input[type=number]:hover{
+   box-shadow: 0 0 5px #b30000;
+   border:1px solid #990000;
+   -webkit-filter: brightness(190%);
+}
+.pulsanti
+{
+	background:url(img/bottone.png);
+	background-size: 100% 100%;
+	color:white;
+	width:80px;
+	height:30px;
+	border:0;
+	-webkit-filter: brightness(110%);
+	-webkit-transition: all 0.40s ease-in-out;
+	-moz-transition: all 0.40s ease-in-out;
+	-ms-transition: all 0.40s ease-in-out;
+	-o-transition: all 0.40s ease-in-out;
+	
+	 box-shadow: 0 0 5px #b30000;
+	 border-radius:21%;
+	 border:1px solid #990000
+}
+.pulsanti:hover
+{
+	-webkit-filter: brightness(160%);
+}
+body
+{
+	background:url("img/3.jpg") fixed;
+	background-size: 100% 100%;
+	color:red;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    width:100%;
+    height:100%;
+}
+html
+{
+	width:100%;
+}
+#logo
+{
+	
+	margin:auto;
+	width:40%;
+	height:15%;
+}
+#logo:hover
+{
+	 -webkit-filter: brightness(130%);
+}
+#contenitore
+{
+	margin:2% auto;
+}
+.cella
+{
+	width:35px;
+	height:35px;
+	border-color: rgb(103, 103, 103);
+	background: url(img/cella.gif);
+	background-size:100%;
+	text-shadow: 0px 2px 3px #555;
+	color:white;
+	text-align:center;
+	font-size:70%;
+	padding: 0;
+}
+#interno
+{
+	margin:auto;
+}
+#selezione
+{
+	margin:0 auto;
+	width:38%;
+	text-align:center;
+}
+
+#formcrea
+{
+	width:50%;
+	margin:2% auto;
+}
+</style>
+</head>
+<body>
+<div id="wrapper">
+
+<div id="logo">
+<img src="img/logo.png" onclick="resettaGriglia()">
+</div>
+<div id="content">
+<div id="selezione">
+<table>
+<tr><td><font color="black">Nero</color></td><td><font color="white">Bianco</color></td><td><font color="#7FFF00">Verde</color></td><td><font color="blue">Blu</color></td><td><font color="#FF00FF">Rosa</color></td><td><font color="red">Rosso</color></td><td><font color="yellow">Giallo</color></td><td><font color="orange">Arancione</color></td><td><font color=#FF4500>Bannate</font></td><td><font color=#C0C0C0>Invisibili</font></td></tr>
+<tr><td><input type="radio" name="colore" value="1" onclick="changeCursor(1)"></td>
+<td><input type="radio" name="colore" value="2" onclick="changeCursor(2)"></td>
+<td><input type="radio" name="colore" value="3" onclick="changeCursor(3)"></td>
+<td><input type="radio" name="colore" value="4" onclick="changeCursor(4)"></td>
+<td><input type="radio" name="colore" value="5" onclick="changeCursor(5)"></td>
+<td><input type="radio" name="colore" value="6" onclick="changeCursor(6)"></td>
+<td><input type="radio" name="colore" value="7" onclick="changeCursor(7)"></td>
+<td><input type="radio" name="colore" value="8" onclick="changeCursor(8)"></td>
+<td><input type="radio" name="colore" value="9" onclick="changeCursor(9)"></td>
+<td><input type="radio" name="colore" value="10" onclick="changeCursor(10)"></td></tr>
+</table>
+</div>
+<div id="formcrea">
+
+Righe:<input type="number" id="righe" min="1">
+Colonne:<input type="number" id="colonne" min="1">
+<input type="button" class='pulsanti' value="Genera" onclick='creaGriglia()'>
+<input type="button" class='pulsanti' value="Reset" onclick='resettaGriglia()'>
+</div>
+<div id="contenitore">
+
+
+	
+</div>
+
+</div>
+<div id="footer"></div>
+</div>
+<script type="text/javascript">
+var creata=0;
+var rclick=0;
+var cclick=0;
+
+var pg1=new Array();
+var pg2=new Array();
+var pg3=new Array();
+var pg4=new Array();
+var pg5=new Array();
+var pg6=new Array();
+var pg7=new Array();
+var pg8=new Array();
+function creaGriglia(){
+var r = document.getElementById("righe").value;
+var c = document.getElementById("colonne").value;
+	if(r<=0 || c<=0)
+	{
+		alert("Valori invalidi");
+		return;
+	}
+	if(creata==1)
+	{
+		resettaGriglia();
+		creaGriglia();
+		return;
+	}
+	else
+		creata=1;
+	var contenitore = document.getElementById("contenitore");
+	var griglia=document.createElement("div");
+	contenitore.appendChild(griglia);
+	griglia.setAttribute("id","interno");
+	griglia.style.width = (c*35)+"px";
+	griglia.style.height = (r*35)+"px";
+
+		for(i=1;i<=r;i++)
+		{
+			for(j=1; j<=c;j++){
+				var cella=document.createElement("input");
+				cella.setAttribute("id",i+"-"+j);
+				cella.setAttribute("type","Button");
+				cella.setAttribute("value",i+"-"+j);
+				cella.setAttribute("class","cella");
+				cella.setAttribute("onclick","clicked("+i+","+j+");");
+				cella.setAttribute("ondblclick","resetclick("+i+","+j+");");
+				var testo = document.createTextNode("");
+				cella.appendChild(testo);
+				griglia.appendChild(cella);
+			}
+		}
+}
+function resettaGriglia()
+{
+	creata=0;
+	var box = document.getElementById("interno");
+	box.parentNode.removeChild(box);
+	return;
+}
+
+function changeCursor(c){
+	var prova=document.getElementsByClassName("cella");
+	for (var k = 0; k < prova.length; k++) {
+		prova[k].style.cursor="url('img/cursor"+c+".png'),auto";
+		prova[k].name=c;
+	}
+}
+function clicked(m,n)
+{
+
+	var scope;
+	scope=document.getElementById(m+"-"+n);
+	var color=scope.name;
+	if(color==1){
+		var nuovo={nodo: m+"-"+n, valore:1};
+		scope.style.background="black"; pg1.push(nuovo); scope.style.color="white";
+		return;
+	}
+	if(color==2){
+		scope.style.background="white"; pg2.push(m+"-"+n); scope.style.color="black"
+		return;
+	}
+	if(color==3){
+		scope.style.background="#7FFF00"; pg3.push(m+"-"+n); scope.style.color="black"
+		return;
+	}
+	if(color==4){
+		scope.style.background="blue"; pg4.push(m+"-"+n); scope.style.color="white";
+		return;
+	}
+	if(color==5){
+		scope.style.background="#FF00FF"; pg5.push(m+"-"+n); 
+		return;
+	}
+	if(color==6){
+		scope.style.background="red"; pg6.push(m+"-"+n); scope.style.color="white";
+		return;
+	}
+	if(color==7){
+		scope.style.background="yellow"; pg7.push(m+"-"+n); scope.style.color="black"
+		return;
+	}
+	if(color==8){
+		scope.style.background="orange"; pg8.push(m+"-"+n); 
+		return;
+	}
+    if(color==9)
+    {
+    	scope.style.background="url(img/cellabanned.png)";
+		return
+    }
+     if(color==10)
+    {
+    	scope.style.opacity=0;
+		return
+    }
+}
+
+function resetclick(m,n)
+{
+	var scope;
+	scope=document.getElementById(m+"-"+n);
+	scope.style.background="url(img/cella.gif)";
+    scope.style.color="white";
+    scope.style.opacity=1;
+	var color=scope.name;
+	if(color==1){
+		pg1.pop(m+"-"+n); 
+		return;
+	}
+	if(color==2){
+		pg2.pop(m+"-"+n); 
+		return;
+	}
+	if(color==3){
+		pg3.pop(m+"-"+n);
+		return;
+	}
+	if(color==4){
+		pg4.pop(m+"-"+n); 
+		return;
+	}
+	if(color==5){
+		pg5.pop(m+"-"+n); 
+		return;
+	}
+	if(color==6){
+		pg6.pop(m+"-"+n); 
+		return;
+	}
+	if(color==7){
+		pg7.pop(m+"-"+n); 
+		return;
+	}
+	if(color==8){
+		pg8.pop(m+"-"+n); 
+		return;
+	}
+}
+
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+/*
+$(document).ready(function(){
+    totaleImmagini=10;
+    randomNumber = Math.round(Math.random()*(totaleImmagini-1))+1;
+    imgPath=(randomNumber+'.jpg'); 
+    $('body').css('background-image', ('url("'+imgPath+'")')); 
+});*/
+</script>
+</body>
+
+
+</html>
